@@ -1,0 +1,177 @@
+{
+    "label": "Google Workspace",
+    "name": "google-workspace",
+    "apiVersion": "v1",
+    "internal": false,
+    "configurationType": "GLOBAL",
+    "deployment": {
+        "profiles":[
+            {
+                "name": "default",
+                "label": "Default",
+                "memory": 256,
+                "offHeapMinFactor": 1.5,
+                "description": "Default configuration"
+            }
+        ],
+        "allowMultipleInstances": false
+    },
+    "status": "ACTIVE",
+    "stores": [
+        {
+            "name": "googleAccessToken"
+        }
+    ],
+    "events": [
+    ],
+    "functions": [
+        {
+            "label": "GET request",
+            "name": "_get",
+            "functionType": "GLOBAL"
+        },
+        {
+            "label": "POST request",
+            "name": "_post",
+            "functionType": "GLOBAL"
+        },
+        {
+            "label": "PUT request",
+            "name": "_put",
+            "functionType": "GLOBAL"
+        },
+        {
+            "label": "PATCH request",
+            "name": "_patch",
+            "functionType": "GLOBAL"
+        },
+        {
+            "label": "DELETE request",
+            "name": "_delete",
+            "functionType": "GLOBAL"
+        }
+    ],
+    "scripts":[
+        "functions.js"
+    ],
+    "configuration":[
+        {
+            "name": "serviceAccountEmail",
+            "label": "Service Account Email",
+            "description": "The email from service account created",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "privateKey",
+            "label": "Private Key",
+            "description": "The private key associated to the service account",
+            "type": "password",
+            "required": true
+        },
+        {
+            "name": "adminEmail",
+            "label": "Admin Account Email",
+            "description": "The admin email who will be impersonated",
+            "type": "text",
+            "required": true
+        },
+        {
+            "label": "Auth Scopes",
+            "name": "authScopes",
+            "description": "The auth scopes the service accounts have, if you select scopes that don't belong to your service account it will lead to authorization errors",
+            "type": "dropDown",
+            "multiplicity": "many",
+            "defaultValue": ["user"],
+            "typeOptions": {
+                "allowCustom": true,
+                "possibleValues":[
+                    {
+                        "label": "User aliases readonly scope",
+                        "name": "user.alias.readonly"
+                    },
+                    {
+                        "label": "User aliases scope",
+                        "name": "user.alias"
+                    },
+                    {
+                        "label": "Users readonly scope",
+                        "name": "user.readonly"
+                    },
+                    {
+                        "label": "Users scope",
+                        "name": "user"
+                    },
+                    {
+                        "label": "Organizational units redaonly scope",
+                        "name": "orgunit.readonly"
+                    },
+                    {
+                        "label": "Organizational units scope",
+                        "name": "orgunit"
+                    },
+                    {
+                        "label": "Groups readonly scope",
+                        "name": "group.readonly"
+                    },
+                    {
+                        "label": "Groups scope",
+                        "name": "group"
+                    },
+                    {
+                        "label": "Group members readonly scope",
+                        "name": "group.member.readonly"
+                    },
+                    {
+                        "label": "Group members scope",
+                        "name": "group.member"
+                    },
+                    {
+                        "label": "Users security scope",
+                        "name": "user.security"
+                    },
+                    {
+                        "label": "Role management scope",
+                        "name": "rolemanagement"
+                    },
+                    {
+                        "label": "Resource Calendar readonly scope",
+                        "name": "resource.calendar.readonly"
+                    },
+                    {
+                        "label": "Resource Calendar scope",
+                        "name": "resource.calendar"
+                    },
+                    {
+                        "label": "Domains readonly scope",
+                        "name": "domain.readonly"
+                    },
+                    {
+                        "label": "Domains scope",
+                        "name": "domain"
+                    },
+                    {
+                        "label": "Customers readonly scope",
+                        "name": "customer.readonly"
+                    },
+                    {
+                        "label": "Customers scope",
+                        "name": "customer"
+                    },
+                    {
+                        "label": "Userschema readonly scope",
+                        "name": "userschema.readonly"
+                    },
+                    {
+                        "label": "Userschema scope",
+                        "name": "userschema"
+                    },
+                    {
+                        "label": "Role management readonly scope",
+                        "name": "rolemanagement.readonly"
+                    }
+                ]
+            }
+        }
+    ]
+}
