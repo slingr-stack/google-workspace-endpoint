@@ -52,7 +52,8 @@
         }
     ],
     "scripts":[
-        "functions.js"
+        "functions.js",
+        "http-generic-helpers.js"
     ],
     "configuration":[
         {
@@ -87,89 +88,98 @@
                 "allowCustom": true,
                 "possibleValues":[
                     {
-                        "label": "User aliases readonly scope",
-                        "name": "user.alias.readonly"
+                        "label": "Directory > User aliases readonly scope",
+                        "name": "directory.user.alias.readonly"
                     },
                     {
-                        "label": "User aliases scope",
-                        "name": "user.alias"
+                        "label": "Directory > User aliases scope",
+                        "name": "directory.user.alias"
                     },
                     {
-                        "label": "Users readonly scope",
-                        "name": "user.readonly"
+                        "label": "Directory > Users readonly scope",
+                        "name": "directory.user.readonly"
                     },
                     {
-                        "label": "Users scope",
-                        "name": "user"
+                        "label": "Directory > Users scope",
+                        "name": "directory.user"
                     },
                     {
-                        "label": "Organizational units redaonly scope",
-                        "name": "orgunit.readonly"
+                        "label": "Directory > Organizational units redaonly scope",
+                        "name": "directory.orgunit.readonly"
                     },
                     {
-                        "label": "Organizational units scope",
-                        "name": "orgunit"
+                        "label": "Directory > Organizational units scope",
+                        "name": "directory.orgunit"
                     },
                     {
-                        "label": "Groups readonly scope",
-                        "name": "group.readonly"
+                        "label": "Directory > Groups readonly scope",
+                        "name": "directory.group.readonly"
                     },
                     {
-                        "label": "Groups scope",
-                        "name": "group"
+                        "label": "Directory > Groups scope",
+                        "name": "directory.group"
                     },
                     {
-                        "label": "Group members readonly scope",
-                        "name": "group.member.readonly"
+                        "label": "Directory > Group members readonly scope",
+                        "name": "directory.group.member.readonly"
                     },
                     {
-                        "label": "Group members scope",
-                        "name": "group.member"
+                        "label": "Directory > Group members scope",
+                        "name": "directory.group.member"
                     },
                     {
-                        "label": "Users security scope",
-                        "name": "user.security"
+                        "label": "Directory > Users security scope",
+                        "name": "directory.user.security"
                     },
                     {
-                        "label": "Role management scope",
-                        "name": "rolemanagement"
+                        "label": "Directory > Role management scope",
+                        "name": "directory.rolemanagement"
                     },
                     {
-                        "label": "Resource Calendar readonly scope",
-                        "name": "resource.calendar.readonly"
+                        "label": "Directory > Resource Calendar readonly scope",
+                        "name": "directory.resource.calendar.readonly"
                     },
                     {
-                        "label": "Resource Calendar scope",
-                        "name": "resource.calendar"
+                        "label": "Directory > Resource Calendar scope",
+                        "name": "directory.resource.calendar"
                     },
                     {
-                        "label": "Domains readonly scope",
-                        "name": "domain.readonly"
+                        "label": "Directory > Domains readonly scope",
+                        "name": "directory.domain.readonly"
                     },
                     {
-                        "label": "Domains scope",
-                        "name": "domain"
+                        "label": "Directory > Domains scope",
+                        "name": "directory.domain"
                     },
                     {
-                        "label": "Customers readonly scope",
-                        "name": "customer.readonly"
+                        "label": "Directory > Customers readonly scope",
+                        "name": "directory.customer.readonly"
                     },
                     {
-                        "label": "Customers scope",
-                        "name": "customer"
+                        "label": "Directory > Customers scope",
+                        "name": "directory.customer"
                     },
                     {
-                        "label": "Userschema readonly scope",
-                        "name": "userschema.readonly"
+                        "label": "Directory > Userschema readonly scope",
+                        "name": "directory.userschema.readonly"
                     },
                     {
-                        "label": "Userschema scope",
-                        "name": "userschema"
+                        "label": "Directory > Userschema scope",
+                        "name": "directory.userschema"
                     },
                     {
-                        "label": "Role management readonly scope",
-                        "name": "rolemanagement.readonly"
+                        "label": "Directory > Role management readonly scope",
+                        "name": "directory.rolemanagement.readonly"
+                    },
+                    {
+                        "label": "Data Transfer > Data transfer scope",
+                        "name": "datatransfer"
+                    },
+                    {
+                        "label": "Data Transfer > Data transfer readonly scope",
+                        "name": "datatransfer.readonly"
                     }
+                    
                 ]
             }
         }

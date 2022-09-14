@@ -97,7 +97,6 @@ public class AuthManager {
                 this.accessToken = accessTokenResponse.string("access_token");
             } catch (Exception e) {
                 logger.error("An error occurred while trying to get the access token, check the given OAuth scopes", e);
-                throw e;
             }
         } else {
             this.accessToken = lastToken.string(ACCESS_TOKEN);
@@ -120,7 +119,7 @@ public class AuthManager {
     
     private String setOauthScopes(List<String> scopes) {
         //the needed scopes must be joined with a space character (' ') in order to pass it to the JWT about to be generated
-        String authUrlSnippet = "https://www.googleapis.com/auth/admin.directory.";
+        String authUrlSnippet = "https://www.googleapis.com/auth/admin.";
         for (int i = 0; i < scopes.size(); i++) {
             scopes.set(i, authUrlSnippet + scopes.get(i));
         }

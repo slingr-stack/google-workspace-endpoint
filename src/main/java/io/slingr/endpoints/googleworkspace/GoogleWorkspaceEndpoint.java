@@ -13,9 +13,13 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @SlingrEndpoint(name = "google-workspace", functionPrefix = "_")
 public class GoogleWorkspaceEndpoint extends HttpEndpoint {
     private static final String API_URL = "https://admin.googleapis.com/admin";
+    private static final Logger logger = LoggerFactory.getLogger(GoogleWorkspaceEndpoint.class);
     private AuthManager authManager;
 
     @EndpointDataStore(name = AuthManager.DATA_STORE)
@@ -41,8 +45,7 @@ public class GoogleWorkspaceEndpoint extends HttpEndpoint {
             this.authManager.setUpTokenInRequests();
             appLogs.info("Access token succefully set up on endpoint start....");
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            appLogs.info("An error occurred while setting the token ", e);
-            e.printStackTrace();
+            appLogs.info("An error occurred while setting the access token ", e);
         }
     }
 
@@ -120,7 +123,7 @@ public class GoogleWorkspaceEndpoint extends HttpEndpoint {
         if (e instanceof EndpointException) {
             EndpointException restException = (EndpointException) e;
             if (restException.getCode() != null) {
-                System.out.println(restException.getReturnCode());
+                logger.error("Status Code: "+ String.valueOf(restException.getReturnCode()));
             }
             return restException.getReturnCode() == 401;
         }
