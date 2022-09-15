@@ -16,7 +16,7 @@ import java.security.spec.InvalidKeySpecException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SlingrEndpoint(name = "google-workspace", functionPrefix = "_")
+@SlingrEndpoint(name = "googleworkspace", functionPrefix = "_")
 public class GoogleWorkspaceEndpoint extends HttpEndpoint {
     private static final String API_URL = "https://admin.googleapis.com/admin";
     private static final Logger logger = LoggerFactory.getLogger(GoogleWorkspaceEndpoint.class);
