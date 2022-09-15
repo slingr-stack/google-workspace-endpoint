@@ -10,8 +10,6 @@ import io.slingr.endpoints.ws.exchange.FunctionRequest;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,8 +42,8 @@ public class GoogleWorkspaceEndpoint extends HttpEndpoint {
             this.authManager.setLastToken();
             this.authManager.setUpTokenInRequests();
             appLogs.info("Access token succefully set up on endpoint start....");
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            appLogs.info("An error occurred while setting the access token ", e);
+        } catch (Exception e) {
+            appLogs.error("An error occurred while setting the access token ", e);
         }
     }
 

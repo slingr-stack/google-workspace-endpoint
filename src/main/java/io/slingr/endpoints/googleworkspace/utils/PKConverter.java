@@ -10,7 +10,7 @@ import java.util.Base64;
 public class PKConverter {
     public static PrivateKey setPrivateKey(String privateKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
         String privateKeyContent = privateKey.replaceAll("\\n", "").replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "");
-        PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.getMimeDecoder().decode(privateKeyContent));
+        PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.getUrlDecoder().decode(privateKeyContent));
         KeyFactory kf = KeyFactory.getInstance("RSA");
         return kf.generatePrivate(keySpecPKCS8);
     }
