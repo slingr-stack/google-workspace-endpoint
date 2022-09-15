@@ -1,6 +1,6 @@
 {
     "label": "Google Workspace",
-    "name": "googleworkspace",
+    "name": "googleWorkspace",
     "apiVersion": "v1",
     "internal": false,
     "configurationType": "GLOBAL",
