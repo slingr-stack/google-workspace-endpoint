@@ -12,7 +12,9 @@ import javax.ws.rs.core.Form;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
+import io.slingr.endpoints.framework.annotations.ApplicationLogger;
 import io.slingr.endpoints.googleworkspace.utils.PKConverter;
+import io.slingr.endpoints.services.AppLogs;
 import io.slingr.endpoints.services.HttpService;
 import io.slingr.endpoints.services.datastores.DataStore;
 import io.slingr.endpoints.services.rest.RestClient;
@@ -30,6 +32,9 @@ public class AuthManager {
     private String adminEmail; 
     private String scopes;
     private static final Logger logger = LoggerFactory.getLogger(GoogleWorkspaceEndpoint.class);
+    
+    @ApplicationLogger
+    private AppLogs appLogs;
 
     public static final String DATA_STORE = "googleAccessToken";
     public static final String LAST_TOKEN = "_LAST_TOKEN";
@@ -39,13 +44,14 @@ public class AuthManager {
     public static final String TIMESTAMP = "timestamp";
     public static final String GOOGLE_AUTH_URL = "https://oauth2.googleapis.com/token";
 
-    public AuthManager(String privateKey, DataStore dataStore, String serviceAccountEmail, String adminEmail, List<String> scopes, HttpService httpService) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public AuthManager(AppLogs appLogs,String privateKey, DataStore dataStore, String serviceAccountEmail, String adminEmail, List<String> scopes, HttpService httpService) throws NoSuchAlgorithmException, InvalidKeySpecException {
         AuthManager.privateKey = PKConverter.setPrivateKey(privateKey);
         this.serviceAccountEmail = serviceAccountEmail;
         this.adminEmail = adminEmail;
         this.scopes = setOauthScopes(scopes);
         this.httpService = httpService;
         this.dataStore = dataStore;
+        this.appLogs = appLogs;
         removeAccessTokenFromDataStore();
     }
     
@@ -81,26 +87,30 @@ public class AuthManager {
     }
 
     public void setLastToken() {
-        Json lastToken = this.getLastToken();
-        Long lastTokenTime = (System.currentTimeMillis() - (lastToken.isEmpty() ? 0 : lastToken.longInteger(TIMESTAMP))) / 1000L;
-        if (lastToken.isEmpty() || lastTokenTime > (lastToken.isEmpty() ? 3599 : Integer.parseInt(lastToken.string(TOKEN_DURATION)))) { 
-            logger.info("Generating JWT....");
-            String jwt = generateJWT(AuthManager.privateKey, this.serviceAccountEmail, this.adminEmail, this.scopes);
-            logger.info("JWT generated succesfully!");
-            Form formBody = new Form().param("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer").param("assertion", jwt);
-            try {
-                Json accessTokenResponse = RestClient.builder(GOOGLE_AUTH_URL)
-                .header("Content-Type", "application/x-www-form-urlencoded")
-                .post(formBody);
-                logger.info("Access token retrieved from JWT!");
-                saveAccessTokenInDataStore(accessTokenResponse.string("access_token"),accessTokenResponse.string("expires_in"));
-                this.accessToken = accessTokenResponse.string("access_token");
-            } catch (Exception e) {
-                logger.error("An error occurred while trying to get the access token, check the given OAuth scopes", e);
+        try{
+            Json lastToken = this.getLastToken();
+            Long lastTokenTime = (System.currentTimeMillis() - (lastToken.isEmpty() ? 0 : lastToken.longInteger(TIMESTAMP))) / 1000L;
+            if (lastToken.isEmpty() || lastTokenTime > (lastToken.isEmpty() ? 3599 : Integer.parseInt(lastToken.string(TOKEN_DURATION)))) { 
+                appLogs.info("Generating JWT....");
+                String jwt = generateJWT(AuthManager.privateKey, this.serviceAccountEmail, this.adminEmail, this.scopes);
+                appLogs.info("JWT generated succesfully!");
+                Form formBody = new Form().param("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer").param("assertion", jwt);
+                try {
+                    Json accessTokenResponse = RestClient.builder(GOOGLE_AUTH_URL)
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .post(formBody);
+                    appLogs.info("Access token retrieved from JWT!");
+                    saveAccessTokenInDataStore(accessTokenResponse.string("access_token"),accessTokenResponse.string("expires_in"));
+                    this.accessToken = accessTokenResponse.string("access_token");
+                } catch (Exception e) {
+                    appLogs.error("An error occurred while trying to get the access token, check the given OAuth scopes", e);
+                }
+            } else {
+                this.accessToken = lastToken.string(ACCESS_TOKEN);
+                appLogs.info("Token retrieved from DataStore...");
             }
-        } else {
-            this.accessToken = lastToken.string(ACCESS_TOKEN);
-            logger.info("Token retrieved from DataStore...");
+        } catch (Exception error) {
+            appLogs.error("An error occurred. ", error);
         }
     }
 

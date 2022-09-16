@@ -38,8 +38,7 @@ public class GoogleWorkspaceEndpoint extends HttpEndpoint {
     public void endpointStarted() {
         try {
             appLogs.info("Setting access token on endpoint start....");
-            appLogs.info("****** PP "+this.configuration.string("privateKey"));
-            this.authManager = new AuthManager(this.configuration.string("privateKey"), accessTokenDS, this.configuration.string("serviceAccountEmail"), this.configuration.string(("adminEmail")), this.configuration.strings("authScopes"), httpService());
+            this.authManager = new AuthManager(appLogs,this.configuration.string("privateKey"), accessTokenDS, this.configuration.string("serviceAccountEmail"), this.configuration.string(("adminEmail")), this.configuration.strings("authScopes"), httpService());
             this.authManager.setLastToken();
             this.authManager.setUpTokenInRequests();
             appLogs.info("Access token succefully set up on endpoint start....");
