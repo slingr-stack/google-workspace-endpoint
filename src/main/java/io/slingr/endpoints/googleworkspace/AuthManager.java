@@ -87,30 +87,19 @@ public class AuthManager {
     }
 
     public void setLastToken() {
-        try{
-            Json lastToken = this.getLastToken();
-            Long lastTokenTime = (System.currentTimeMillis() - (lastToken.isEmpty() ? 0 : lastToken.longInteger(TIMESTAMP))) / 1000L;
-            if (lastToken.isEmpty() || lastTokenTime > (lastToken.isEmpty() ? 3599 : Integer.parseInt(lastToken.string(TOKEN_DURATION)))) { 
-                appLogs.info("Generating JWT....");
-                String jwt = generateJWT(AuthManager.privateKey, this.serviceAccountEmail, this.adminEmail, this.scopes);
-                appLogs.info("JWT generated succesfully!");
-                Form formBody = new Form().param("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer").param("assertion", jwt);
-                try {
-                    Json accessTokenResponse = RestClient.builder(GOOGLE_AUTH_URL)
-                    .header("Content-Type", "application/x-www-form-urlencoded")
-                    .post(formBody);
-                    appLogs.info("Access token retrieved from JWT!");
-                    saveAccessTokenInDataStore(accessTokenResponse.string("access_token"),accessTokenResponse.string("expires_in"));
-                    this.accessToken = accessTokenResponse.string("access_token");
-                } catch (Exception e) {
-                    appLogs.error("An error occurred while trying to get the access token, check the given OAuth scopes", e);
-                }
-            } else {
-                this.accessToken = lastToken.string(ACCESS_TOKEN);
-                appLogs.info("Token retrieved from DataStore...");
-            }
-        } catch (Exception error) {
-            appLogs.error("An error occurred. ", error);
+        appLogs.info("Generating JWT....");
+        String jwt = generateJWT(AuthManager.privateKey, this.serviceAccountEmail, this.adminEmail, this.scopes);
+        appLogs.info("JWT generated succesfully!");
+        Form formBody = new Form().param("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer").param("assertion", jwt);
+        try {
+            Json accessTokenResponse = RestClient.builder(GOOGLE_AUTH_URL)
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .post(formBody);
+            appLogs.info("Access token retrieved from JWT!");
+            saveAccessTokenInDataStore(accessTokenResponse.string("access_token"),accessTokenResponse.string("expires_in"));
+            this.accessToken = accessTokenResponse.string("access_token");
+        } catch (Exception e) {
+            appLogs.error("An error occurred while trying to get the access token, check the given OAuth scopes", e);
         }
     }
 
