@@ -21,8 +21,6 @@ step.apiCallGoogleWorkspace = function (inputs) {
 		params: inputs.params || [],
 		body: inputs.body || {},
 		followRedirects: inputs.followRedirects || false,
-		download: inputs.download || false,
-		fileName: inputs.fileName || "",
 		fullResponse: inputs.fullResponse || false,
 		connectionTimeout: inputs.connectionTimeout || 5000,
 		readTimeout: inputs.readTimeout || 60000,
@@ -44,9 +42,6 @@ step.apiCallGoogleWorkspace = function (inputs) {
 		headers: inputsLogic.headers,
 		body: inputsLogic.body,
 		followRedirects : inputsLogic.followRedirects,
-		forceDownload :inputsLogic.download,
-		downloadSync : false,
-		fileName: inputsLogic.fileName,
 		fullResponse : inputsLogic.fullResponse,
 		connectionTimeout: inputsLogic.connectionTimeout,
 		readTimeout: inputsLogic.readTimeout
