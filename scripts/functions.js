@@ -518,21 +518,19 @@ endpoint.datatransfer.applications.get = function(applicationId, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length){
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 0:
 			url = parse('/datatransfer/v1/applications');
 			break;
 		case 1:
 			url = parse('/datatransfer/v1/applications/:applicationId', [applicationId]);
 			break;
-		case 2:
-            url = parse('/datatransfer/v1/applications/:applicationId', [applicationId]);
-            break;
-        default:
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
@@ -546,21 +544,19 @@ endpoint.datatransfer.transfers.get = function(dataTransferId, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length){
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 0:
 			url = parse('/datatransfer/v1/transfers');
 			break;
 		case 1:
 			url = parse('/datatransfer/v1/transfers/:dataTransferId', [dataTransferId]);
 			break;
-		case 2:
-            url = parse('/datatransfer/v1/transfers/:dataTransferId', [dataTransferId]);
-            break;
-        default:
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
