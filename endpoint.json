@@ -18,42 +18,38 @@
     },
     "status": "ACTIVE",
     "stores": [
-        {
-            "name": "googleAccessToken"
-        }
+        { "name": "googleAccessToken" }
     ],
-    "events": [
-    ],
+    "events": [],
     "functions": [
         {
-            "label": "GET request",
+            "label": "GET",
             "name": "_get",
-            "functionType": "GLOBAL"
+            "description": "Sends a GET request"
         },
         {
-            "label": "POST request",
+            "label": "POST",
             "name": "_post",
-            "functionType": "GLOBAL"
+            "description": "Sends a POST request"
         },
         {
-            "label": "PUT request",
+            "label": "PUT",
             "name": "_put",
-            "functionType": "GLOBAL"
+            "description": "Sends a PUT request"
         },
         {
-            "label": "PATCH request",
-            "name": "_patch",
-            "functionType": "GLOBAL"
-        },
-        {
-            "label": "DELETE request",
+            "label": "DELETE",
             "name": "_delete",
-            "functionType": "GLOBAL"
+            "description": "Sends a DELETE request"
         }
     ],
     "scripts":[
-        "functions.js",
-        "http-generic-helpers.js"
+        "functions.js"
+    ],
+    "flowSteps": [
+        "apiCallGoogleWorkspace",
+        "listUsersGoogleWorkspace",
+        "createUserGoogleWorkspace"
     ],
     "configuration":[
         {
@@ -68,13 +64,6 @@
             "label": "Private Key",
             "description": "The private key associated to the service account",
             "type": "password",
-            "required": true
-        },
-        {
-            "name": "adminEmail",
-            "label": "Admin Account Email",
-            "description": "The admin email who will be impersonated",
-            "type": "text",
             "required": true
         },
         {
@@ -179,7 +168,6 @@
                         "label": "Data Transfer > Data transfer readonly scope",
                         "name": "datatransfer.readonly"
                     }
-                    
                 ]
             }
         }

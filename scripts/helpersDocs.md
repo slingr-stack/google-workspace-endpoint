@@ -1,44 +1,3 @@
----
-title: Google Workspace Admin Console endpoint
-keywords: 
-last_updated: April 20, 2023
-tags: []
-summary: "Detailed description of the Google Workspace Admin Console endpoint."
----
-
-## Overview
-
-This endpoint allows direct access to the [Google Admin Console, specifically Directory API](https://developers.google.com/admin-sdk/directory/reference/rest) by impersonating a workspace admin user through a service account, however it provides shortcuts and helpers for most common use cases.
-
-Some features available in this endpoint are:
-
-- Authentication and authorization
-- Direct access to the Google Admin Console Directory API
-- Helpers for API methods
-- Flow Steps for common use cases
-
-## Configuration
-
-In order to use the Google Workspace endpoint you must create an app in the [Google Developer Console](https://console.developers.google.com)
-by following these instructions:
-
-- Create a Google Cloud project for your Google Workspace app.
-- Enable the Admin SDK API in your Google Cloud project.
-- Create a service account and credentials and delegate domain-wide authority to it (assign ONLY the necessary scopes to your service account)[Click here for the instructions](https://developers.google.com/admin-sdk/directory/v1/guides/delegation).
-- Download the JSON file with the service account credentials to get the service account private key.
-
-### Service account email
-
-As explained above, this value comes from the credentials file.
-
-### OAuth Scopes
-
-The scopes the service account have access to. Take into account if any scope is selected to which the service account does not have access the endpoint will fail to be authorized to make any requests.
-
-### Private Key
-
-As explained above, this value also comes from the credentials file.
-
 # Javascript API
 
 The Javascript API of the googleworkspace endpoint has three pieces:
@@ -442,10 +401,10 @@ app.endpoints.googleworkspace.directory.customer.devices.mobile.delete(customerK
 ---
 
 </details>
-
+    
 ## Flow Step
 
-As an alternative option to using scripts, you can make use of Flows and Flow Steps specifically created for the endpoint:
+As an alternative option to using scripts, you can make use of Flows and Flow Steps specifically created for the endpoint: 
 <details>
     <summary>Click here to see the Flow Steps</summary>
 
@@ -526,6 +485,38 @@ Generic flow step for full use of the entire endpoint and its services.
         </td>
     </tr>
     <tr>
+        <td>Event</td>
+        <td>dropDown</td>
+        <td>no</td>
+        <td> - </td>
+        <td>Always</td>
+        <td>
+            Used to define event after the call. <br>
+            Possible values are: <br>
+            File Downloaded, Callback
+        </td>
+    </tr>
+    <tr>
+        <td>Callback data</td>
+        <td>textarea</td>
+        <td>no</td>
+        <td> - </td>
+        <td> Event is Callback </td>
+        <td>
+            This is an object you can send that you will get back when the function is processed.
+        </td>
+    </tr>
+    <tr>
+        <td>Callbacks</td>
+        <td>Script</td>
+        <td>no</td>
+        <td> - </td>
+        <td> Event is Callback </td>
+        <td>
+            This is a map where you can listen for different function
+        </td>
+    </tr>
+    <tr>
         <td>Override Settings</td>
         <td>boolean</td>
         <td>no</td>
@@ -540,6 +531,22 @@ Generic flow step for full use of the entire endpoint and its services.
         <td> false </td>
         <td> overrideSettings </td>
         <td>Indicates that the resource has to be downloaded into a file instead of returning it in the response.</td>
+    </tr>
+    <tr>
+        <td>Download</td>
+        <td>boolean</td>
+        <td>no</td>
+        <td> false </td>
+        <td> overrideSettings </td>
+        <td>If true the method won't return until the file has been downloaded, and it will return all the information of the file.</td>
+    </tr>
+    <tr>
+        <td>File name</td>
+        <td>text</td>
+        <td>no</td>
+        <td></td>
+        <td> overrideSettings </td>
+        <td>If provided, the file will be stored with this name. If empty the file name will be calculated from the URL.</td>
     </tr>
     <tr>
         <td>Full response</td>
@@ -604,102 +611,14 @@ For more information about how shortcuts or flow steps works, and how they are g
 
 
 
-### List all users Flow Step
+### Custom Flow Steps Name
 
-This flow step allows you to list all users from a project in Google Workspace.
+Description of Custom Flow Steps
 
-<h3>Outputs</h3>
-
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>response</td>
-        <td>object</td>
-        <td>
-            Object resulting from the response to the endpoint call.
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-
-### Create a user Flow Step
-
-This flow step allows you to create a user in Google Workspace. The User object must follow the [Google Workspace User Schema](https://developers.google.com/admin-sdk/directory/v1/reference/users#resource-representation).
-
-<h3>Inputs</h3>
-
-<table>
-    <thead>
-    <tr>
-        <th>Label</th>
-        <th>Type</th>
-        <th>Required</th>
-        <th>Default</th>
-        <th>Visibility</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>Body</td>
-        <td>json</td>
-        <td>no</td>
-        <td> - </td>
-        <td>Always</td>
-        <td>
-            A payload of data can be sent to the server in the body of the request.
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<h3>Outputs</h3>
-
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>response</td>
-        <td>object</td>
-        <td>
-            Object resulting from the response to the endpoint call.
-        </td>
-    </tr>
-    </tbody>
-</table>
-
+*MANUALLY ADD THE DOCUMENTATION OF THESE FLOW STEPS HERE...*
 
 
 </details>
 
 ## Additional Helpers
 *MANUALLY ADD THE DOCUMENTATION OF THESE HELPERS HERE...*
-
-
-## Events
-
-There are no events for this endpoint.
-
-## About SLINGR
-
-SLINGR is a low-code rapid application development platform that accelerates development, with robust architecture for integrations and executing custom workflows and automation.
-
-[More info about SLINGR](https://slingr.io)
-
-## License
-
-This endpoint is licensed under the Apache License 2.0. See the `LICENSE` file for more details.
