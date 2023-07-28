@@ -1,6 +1,6 @@
 {
   "label": "API call to googleworkspace",
-  "name": "apiCallGoogleWorkspace",
+  "name": "apiCallGoogleworkspace",
   "category": "integrations",
   "description": "This flow step will send generic request to googleworkspace",
   "inputs": [

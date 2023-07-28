@@ -14,7 +14,7 @@
  * {number} connectionTimeout, Read timeout interval, in milliseconds.
  * {number} readTimeout, Connect timeout interval, in milliseconds.
  */
-step.apiCallGoogleWorkspace = function (inputs) {
+step.apiCallGoogleworkspace = function (inputs) {
 
 	var inputsLogic = {
 		headers: inputs.headers || [],

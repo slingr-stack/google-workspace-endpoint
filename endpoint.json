@@ -47,7 +47,7 @@
         "functions.js"
     ],
     "flowSteps": [
-        "apiCallGoogleWorkspace",
+        "apiCallGoogleworkspace",
         "listUsersGoogleWorkspace",
         "createUserGoogleWorkspace"
     ],
