@@ -520,7 +520,7 @@ endpoint.datatransfer.applications.get = function(applicationId, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -546,7 +546,7 @@ endpoint.datatransfer.transfers.get = function(dataTransferId, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -656,17 +656,17 @@ endpoint.get = function(url, httpOptions, callbackData, callbacks) {
 };
 
 endpoint.post = function(url, httpOptions, callbackData, callbacks) {
-    options = checkHttpOptions(url, httpOptions);
+    var options = checkHttpOptions(url, httpOptions);
     return endpoint._post(options, callbackData, callbacks);
 };
 
 endpoint.put = function(url, httpOptions, callbackData, callbacks) {
-    options = checkHttpOptions(url, httpOptions);
+    var options = checkHttpOptions(url, httpOptions);
     return endpoint._put(options, callbackData, callbacks);
 };
 
 endpoint.patch = function(url, httpOptions, callbackData, callbacks) {
-    options = checkHttpOptions(url, httpOptions);
+    var options = checkHttpOptions(url, httpOptions);
     return endpoint._patch(options, callbackData, callbacks);
 };
 
@@ -686,7 +686,7 @@ endpoint.options = function(url, httpOptions, callbackData, callbacks) {
 };
 
 endpoint.utils = {};
-            
+
 endpoint.utils.parseTimestamp = function(dateString) {
     if (!dateString) {
         return null;
@@ -716,6 +716,25 @@ endpoint.utils.formatTimestamp = function(date) {
         + 'Z';
 };
 
+endpoint.utils.fromDateToTimestamp = function(params) {
+    if (!!params) {
+        return {timestamp: new Date(params).getTime()};
+    }
+    return null;
+};
+
+endpoint.utils.fromMillisToDate = function(params) {
+    if (!!params) {
+        var sdf = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+            timeZone: 'UTC'
+        });
+        return {date: sdf.format(new Date(parseInt(params)))};
+    }
+    return null;
+};
+
 ///////////////////////
 //  Private helpers  //
 ///////////////////////
@@ -734,7 +753,7 @@ var mergeJSON = function (json1, json2) {
 
 var concatQuery = function (url, key, value) {
     return url + ((!url || url.indexOf('?') < 0) ? '?' : '&') + key + "=" + value;
-};
+}
 
 var checkHttpOptions = function (url, options) {
     options = options || {};
@@ -756,13 +775,13 @@ var checkHttpOptions = function (url, options) {
         }
     }
     return options;
-};
+}
 
 var isObject = function (obj) {
     return !!obj && stringType(obj) === '[object Object]'
-};
+}
 
-var stringType = Function.prototype.call.bind(Object.prototype.toString);
+var stringType = Function.prototype.call.bind(Object.prototype.toString)
 
 var parse = function (str) {
     try {
